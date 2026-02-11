@@ -3,9 +3,7 @@ import Form from "../component/Form";
 
 
 async function fetchRules() {
-  const res = await fetch("http://localhost:8080/rules", {
-    cache: "no-store",
-  });
+  const res = await fetch("http://localhost:8080/rules");
 
   if (!res.ok) {
     throw new Error("Failed to load rules");
@@ -20,13 +18,9 @@ export default async function FormPage() {
 
   return (
     <div className="flex h-screen">
-
-      {/* LEFT */}
       <div className="w-1/2 border-r p-8 overflow-y-auto">
         <Docs />
       </div>
-
-      {/* RIGHT */}
       <div className="w-1/2 flex  p-8">
         <Form rules={rules}/>
       </div>
