@@ -1,0 +1,10 @@
+    {
+        "name":"@repo/types",
+        "version":"0.0.0",
+        "description":"Types for the project",
+        "main":"index.ts",
+        "types":"index.ts",
+        "files":[
+            "index.ts"
+        ]
+    }
