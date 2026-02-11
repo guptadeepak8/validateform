@@ -4,7 +4,7 @@ const Docs = () => {
   return (
     <>
         <h1 className="text-2xl font-bold mb-6">
-           Consistent Form — Test Guide
+           Validated Form— Test Guide
         </h1>
 
         <section className="space-y-4 text-lg">
@@ -20,8 +20,8 @@ const Docs = () => {
               </li>
 
               <li>
-                <b>Server Field Error</b>  
-                Use an email like:
+                <b>Server Field Error: </b>  
+                Use an email like
                 <div className="bg-gray-100 p-2 mt-1 rounded">
                   test@test.com
                 </div>

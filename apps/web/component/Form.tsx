@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "../lib/api";
 import { buildSchema } from "../lib/buildSchema";
+import FormRules from "./FormRules";
+import type { DynamicRule } from "@repo/types";
 
 
 type FormValues = {
@@ -12,22 +14,12 @@ type FormValues = {
   amount: number;
 };
 
-//server componet 
-async function FetchForm(){
-    try {
-        
-    } catch (error) {
-        
-    } 
-}
-
-//client ciompeont 
-export default function Form() {
-  const [schema, setSchema] = useState<any>();
+export default function Form({ rules }: { rules: DynamicRule[] }) {
+  const schema = useMemo(() => buildSchema(rules), [rules]);
   const [globalServerError, setGlobalServerError] = useState<string | null>(null);
 
   const form = useForm<FormValues>({
-    resolver: schema ? zodResolver(schema) : undefined,
+    resolver:zodResolver(schema) as any,
     mode: "onBlur", 
   });
 
@@ -37,21 +29,9 @@ export default function Form() {
     formState: { errors, isSubmitting },
     clearErrors,
     setError,
+    reset
   } = form;
 
-  useEffect(() => {
-    const fetchRules = async () => {
-      try {
-        const res = await api.get("/rules");
-        setSchema(buildSchema(res.data.rules));
-      } catch (e: any) {
-        const response = e.response?.data;
-        setGlobalServerError(response?.message || "Failed to load form rules");
-      }
-    };
-
-    fetchRules();
-  }, []);
 
   const onSubmit = async (data: FormValues) => {
     setGlobalServerError(null);
@@ -59,7 +39,7 @@ export default function Form() {
 
     try {
       await api.post("/submit", data);
-      alert("Success");
+      reset() 
     } catch (e: any) {
       const response = e.response?.data;
 
@@ -83,7 +63,14 @@ export default function Form() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md">
+    <div className="flex flex-col gap-20">
+        <div>
+       <FormRules rules={rules}/>
+      </div>
+    
+      <div className="flex justify-center items-center"> 
+
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md ">
 
       <div>
         <input
@@ -91,7 +78,7 @@ export default function Form() {
             onChange: () => clearErrors("email"), 
           })}
           placeholder="Email"
-          className="border p-2 w-full"
+          className="border p-2 w-[240px]"
         />
 
         {errors.email && (
@@ -114,7 +101,7 @@ export default function Form() {
             onChange: () => clearErrors("amount"),
           })}
           placeholder="Amount"
-          className="border p-2 w-full"
+          className="border p-2 w-[240px]"
         />
 
         {errors.amount && (
@@ -143,5 +130,8 @@ export default function Form() {
         {isSubmitting ? "Submitting..." : "Submit"}
       </button>
     </form>
+      </div>
+      
+    </div>
   );
 }

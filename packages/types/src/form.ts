@@ -6,10 +6,6 @@ export type DynamicRule = {
     max?: number;
   };
   
-  export type ValidationRulesResponse = {
-    rules: DynamicRule[];
-  };
-  
   export type SubmitFormDTO = {
     email: string;
     amount: number;
