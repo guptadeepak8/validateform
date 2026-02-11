@@ -12,14 +12,23 @@ type FormValues = {
   amount: number;
 };
 
+//server componet 
+async function FetchForm(){
+    try {
+        
+    } catch (error) {
+        
+    } 
+}
+
+//client ciompeont 
 export default function Form() {
   const [schema, setSchema] = useState<any>();
   const [globalServerError, setGlobalServerError] = useState<string | null>(null);
 
-  // ✅ create form FIRST
   const form = useForm<FormValues>({
     resolver: schema ? zodResolver(schema) : undefined,
-    mode: "onBlur", // better UX than onSubmit
+    mode: "onBlur", 
   });
 
   const {
@@ -30,7 +39,6 @@ export default function Form() {
     setError,
   } = form;
 
-  // ✅ Fetch rules
   useEffect(() => {
     const fetchRules = async () => {
       try {
@@ -45,7 +53,6 @@ export default function Form() {
     fetchRules();
   }, []);
 
-  // ✅ Submit
   const onSubmit = async (data: FormValues) => {
     setGlobalServerError(null);
     clearErrors();
@@ -67,7 +74,6 @@ export default function Form() {
     }
   };
 
-  // ✅ Handle rule load failure
   if (globalServerError && !schema) {
     return <p className="text-red-600">{globalServerError}</p>;
   }
@@ -78,12 +84,11 @@ export default function Form() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md">
-      
-      {/* EMAIL */}
+
       <div>
         <input
           {...register("email", {
-            onChange: () => clearErrors("email"), // clears server error on edit
+            onChange: () => clearErrors("email"), 
           })}
           placeholder="Email"
           className="border p-2 w-full"
@@ -101,8 +106,6 @@ export default function Form() {
           </p>
         )}
       </div>
-
-      {/* AMOUNT */}
       <div>
         <input
           type="number"
@@ -126,15 +129,12 @@ export default function Form() {
           </p>
         )}
       </div>
-
-      {/* GLOBAL ERROR */}
       {globalServerError && (
         <div className="text-red-600 border border-red-500 p-2">
           {globalServerError}
         </div>
       )}
 
-      {/* SUBMIT */}
       <button
         type="submit"
         disabled={isSubmitting}

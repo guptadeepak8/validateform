@@ -16,8 +16,8 @@ export function buildSchema(rules: DynamicRule[]) {
 
     if (rule.field === "amount") {
       let field = z.number();
-      if (rule.min !== undefined) field = field.min(rule.min,`Minimum amount is ₹${rule.min}`);
       if (rule.required) field = field.min(1, "Required Amount");
+      if (rule.min !== undefined) field = field.min(rule.min,`Minimum amount is ₹${rule.min}`);
       shape.amount = field;
     }
   }
