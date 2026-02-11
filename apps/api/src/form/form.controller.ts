@@ -13,7 +13,7 @@ export class FormController {
     return {
       rules: [
         { field: "email", required: true, pattern: "^\\S+@\\S+$" },
-        { field: "amount", required: true, min: 100 }
+        { field: "amount", required: true, min: 100, max :100000}
       ],
     };
   }
@@ -24,6 +24,12 @@ export class FormController {
       throw new BadRequestException({
         field: "amount",
         message: "Minimum amount is 100",
+      });
+    }
+    if (body.amount > 1000000) {
+      throw new BadRequestException({
+        field: "amount",
+        message: "Your Maximum Limit is 100000",
       });
     }
 

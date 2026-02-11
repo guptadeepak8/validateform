@@ -69,23 +69,21 @@ export default function Form({ rules }: { rules: DynamicRule[] }) {
   }
 
   return (
-    <div className="flex flex-col gap-20">
-        <div>
-       <FormRules rules={rules}/>
-      </div>
+    <div className="flex flex-col gap-5">
+        
     
-      <div className="flex justify-center items-center"> 
+      <div className="flex justify-center items-center rounded-xl border bg-gray-50 p-5"> 
 
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md ">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-[240px]">
 
       <div className="flex flex-col gap-2">
-      <label htmlFor="email">Email: </label>
+      <label htmlFor="email">Email</label>
         <input
           {...register("email", {
             onChange: () => clearErrors("email"), 
           })}
           placeholder="Email"
-          className="border p-2 w-[240px]"
+          className="border p-2 "
         />
 
         {errors.email && (
@@ -101,7 +99,7 @@ export default function Form({ rules }: { rules: DynamicRule[] }) {
         )}
       </div>
       <div className="flex flex-col gap-2">
-        <label htmlFor="amount">Amount: </label>
+        <label htmlFor="amount">Amount</label>
         <input
           type="number"
           {...register("amount", {
@@ -109,7 +107,7 @@ export default function Form({ rules }: { rules: DynamicRule[] }) {
             onChange: () => clearErrors("amount"),
           })}
           placeholder="Amount"
-          className="border p-2 w-[240px]"
+          className="border p-2"
         />
 
         {errors.amount && (
@@ -145,7 +143,9 @@ export default function Form({ rules }: { rules: DynamicRule[] }) {
       </button>
     </form>
       </div>
-      
+      <div>
+       <FormRules rules={rules}/>
+      </div>
     </div>
   );
 }
