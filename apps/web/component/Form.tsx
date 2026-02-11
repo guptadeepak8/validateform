@@ -78,7 +78,8 @@ export default function Form({ rules }: { rules: DynamicRule[] }) {
 
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md ">
 
-      <div>
+      <div className="flex flex-col gap-2">
+      <label htmlFor="email">Email: </label>
         <input
           {...register("email", {
             onChange: () => clearErrors("email"), 
@@ -99,7 +100,8 @@ export default function Form({ rules }: { rules: DynamicRule[] }) {
           </p>
         )}
       </div>
-      <div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="amount">Amount: </label>
         <input
           type="number"
           {...register("amount", {
