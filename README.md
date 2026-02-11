@@ -71,7 +71,7 @@ The project uses **Turborepo** for faster development and shared packages.
 
 - If the data passes client validation but fails on the server, the server errors are shown in a darker red to clearly distinguish them from client errors.
 
-- User input is preserved during failures, and duplicate submissions are prevented while the request is in progress.
+- User input is preserved during failures.
 
 **Use Case:**  
 Business rules such as minimum amount can vary by region or policy. Instead of enforcing these rules in the frontend, they are controlled by the server so changes can be made without redeploying the client.

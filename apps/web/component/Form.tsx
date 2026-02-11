@@ -17,6 +17,8 @@ type FormValues = {
 export default function Form({ rules }: { rules: DynamicRule[] }) {
   const schema = useMemo(() => buildSchema(rules), [rules]);
   const [globalServerError, setGlobalServerError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
 
   const form = useForm<FormValues>({
     resolver:zodResolver(schema) as any,
@@ -39,7 +41,11 @@ export default function Form({ rules }: { rules: DynamicRule[] }) {
 
     try {
       await api.post("/submit", data);
+      setSuccess(true);
       reset() 
+      setTimeout(() => {
+        setSuccess(false);
+      }, 4000);
     } catch (e: any) {
       const response = e.response?.data;
 
@@ -121,6 +127,12 @@ export default function Form({ rules }: { rules: DynamicRule[] }) {
           {globalServerError}
         </div>
       )}
+
+{success && (
+  <div className="bg-green-50 border border-green-400 text-green-700 p-2 rounded">
+    Form submitted successfully.
+  </div>
+)}
 
       <button
         type="submit"
