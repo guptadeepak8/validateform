@@ -21,7 +21,6 @@ Validation rules are treated as configuration so they can change without requiri
 - Dynamic client-side validation  
 - Server-side validation as the source of truth  
 - Clear separation of client and server errors  
-- No duplicate submissions  
 - User input persists on error  
 
 ---
